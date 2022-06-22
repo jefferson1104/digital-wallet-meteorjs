@@ -15,39 +15,54 @@ export const ContactForm = () => {
   }
 
   return (
-    <form>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input 
-          id="name"
-          type="text" 
-          value={name}
-          onChange={(e) => setName(e.target.value)} 
-        />
+    <form className="mt-6">
+      <div className="grid grid-cols-6 gap-6">
+        <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-slate-800 focus:border-slate-800 sm:text-sm"
+          />
+        </div>
+
+        <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-slate-800 focus:border-slate-800 sm:text-sm"
+          />
+        </div>
+
+        <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+          <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">
+            Image URL
+          </label>
+          <input
+            type="text"
+            id="imageUrl"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-slate-800 focus:border-slate-800 sm:text-sm"
+          />
+          </div>
       </div>
 
-      <div>
-        <label htmlFor="email">Email</label>
-        <input 
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-      </div>
-
-      <div>
-        <label htmlFor="imageUrl">Image URL</label>
-        <input 
-          id="imageUrl" 
-          type="text" 
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)} 
-        />
-      </div>
-
-      <div>
-        <button type="button" onClick={saveContact}>
+      <div className="py-3 text-right">
+        <button
+          type="button"
+          onClick={saveContact}
+          className="bg-slate-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-700"
+        >
           Save Contact
         </button>
       </div>
