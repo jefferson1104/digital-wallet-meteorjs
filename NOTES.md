@@ -9,6 +9,12 @@ $ meteor create NOME_DO_PROJETO
 
 # Instalar as dependencias, acesse o seu projeto e no terminal execute
 $ meteor
+
+# Acessar o client do projeto
+localhost:3000
+
+# Acessar o banco de dados do mongo
+localhost:3001
 ```
 
 ## Instalando TailwindCSS
