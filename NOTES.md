@@ -58,3 +58,15 @@ module.exports = {
 ```
 
 pronto, agora voce pode começar a utilizar o tailwindcss adicionando nas classes dos seus elementos JSX/TSX.
+
+
+
+
+## MongoDB
+```bash
+# Access mongo command line
+$ meteor mongo
+
+# Example command mongo to find contacts on the collections
+$ db.contacts.find({}).pretty()
+```
