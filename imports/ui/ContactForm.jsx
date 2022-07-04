@@ -7,6 +7,7 @@ export const ContactForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [walletId, setWalletId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -25,13 +26,14 @@ export const ContactForm = () => {
   }
 
   const saveContact = () => {
-    Meteor.call('contacts.insert', { name, email, imageUrl}, (errorResponse) => {
+    Meteor.call('contacts.insert', { name, email, imageUrl, walletId}, (errorResponse) => {
       if(errorResponse) {
         showError({ message: errorResponse.error });
       } else {
         setName("");
         setEmail("");
         setImageUrl("");
+        setWalletId("");
         showSuccess({ message: "Contact saved." });
       }
     });    
@@ -79,7 +81,19 @@ export const ContactForm = () => {
             onChange={(e) => setImageUrl(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-slate-800 focus:border-slate-800 sm:text-sm"
           />
-          </div>
+        </div>
+        <div className="col-span-6 ">
+          <label htmlFor="walletId" className="block text-sm font-medium text-gray-700">
+            Wallet ID
+          </label>
+          <input
+            type="text"
+            id="walletId"
+            value={walletId}
+            onChange={(e) => setWalletId(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-slate-800 focus:border-slate-800 sm:text-sm"
+          />
+        </div>
       </div>
 
       <div className="py-3 text-right">
