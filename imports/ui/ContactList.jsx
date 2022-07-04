@@ -1,13 +1,16 @@
 import React, { memo } from "react";
 import { ContactsCollection } from "../api/ContactsCollection";
 import { useSubscribe, useFind } from "meteor/react-meteor-data"
+import { Loading } from "./components/Loading"
 
 export const ContactList = () => {
   const isLoading = useSubscribe('contacts');
-
   const contacts = useFind(() => {
-    return ContactsCollection.find({ archived: { $ne: true }}, { sort: {createdAt: -1 }});
-  })
+    return ContactsCollection.find(
+      { archived: { $ne: true }}, 
+      { sort: {createdAt: -1 }}
+    );
+  });
 
   const archiveContact = (event, _id) => {
     event.preventDefault();
@@ -20,15 +23,7 @@ export const ContactList = () => {
   }
 
   if (isLoading()) {
-    return (
-      <div>
-        <div className="mt-10">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Loading...
-          </h3>
-        </div>
-      </div>
-    )
+    return <Loading />
   }
 
   const ContactItem = memo(({ contact }) => {
