@@ -34,9 +34,12 @@ export const Wallet = () => {
       sourceWalletId: wallet._id,
       destinationWalletId: destinationWallet?.walletId || "",
       amount: Number(amount),
+      createdAt: new Date(),
     }, (errorResponse) => {
       if (errorResponse) {
-        setErrorMessage(errorResponse.error);
+        errorResponse.details?.forEach((error) => {
+          setErrorMessage(error.message);
+        });
       } else {
         setOpen(false);
         setDestinationWallet({});
