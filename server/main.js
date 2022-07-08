@@ -1,43 +1,23 @@
 import { Meteor } from "meteor/meteor";
-import SimpleSchema from "simpl-schema";
 
-import "../imports/api/ContactsCollection";
-import "../imports/api/WalletsCollection";
-import "../imports/api/TransactionsCollection";
+import "../imports/api/collections/ContactsCollection";
+import "../imports/api/collections/WalletsCollection";
+import "../imports/api/collections/TransactionsCollection";
 
-import "../imports/api/TransactionsMethods";
-import "../imports/api/ContactsMethods";
+import "../imports/api/methods/TransactionsMethods";
+import "../imports/api/methods/ContactsMethods";
 
-import "../imports/api/ContactsPublications";
-import "../imports/api/WalletsPublications";
+import "../imports/api/publications/ContactsPublications";
+import "../imports/api/publications/WalletsPublications";
 
 import "../infra/CustomError";
 
-import { WalletsCollection } from "../imports/api/WalletsCollection";
-
-const walletSchema = new SimpleSchema({
-  balance: {
-    type: Number,
-    min: 0,
-    defaultValue: 0,
-  },
-  currency: {
-    type: String,
-    allowedValues: ['USD'],
-    defaultValue: 'USD',
-  },
-  createdAt: {
-    type: Date,
-  },
-});
+import { WalletsCollection } from "../imports/api/collections/WalletsCollection";
 
 Meteor.startup(() => {
   if (!WalletsCollection.find().count()) {
-    const walletData = {
+    WalletsCollection.insert({
       createdAt: new Date(),
-    };
-    const cleanWallet = walletSchema.clean(walletData);
-    walletSchema.validate(cleanWallet);
-    WalletsCollection.insert(cleanWallet);
+    });
   }
 });

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
 import { useSubscribe, useFind } from "meteor/react-meteor-data"
 
-import { ContactsCollection } from "../api/ContactsCollection";
-import { WalletsCollection } from "../api/WalletsCollection";
+import { ContactsCollection } from "../api/collections/ContactsCollection";
+import { WalletsCollection } from "../api/collections/WalletsCollection";
 
 import { Loading } from "./components/Loading";
 import { Modal } from "./components/Modal";

@@ -1,6 +1,8 @@
 import React, { memo } from "react";
-import { ContactsCollection } from "../api/ContactsCollection";
 import { useSubscribe, useFind } from "meteor/react-meteor-data"
+
+import { ContactsCollection } from "../api/collections/ContactsCollection";
+
 import { Loading } from "./components/Loading"
 
 export const ContactList = () => {
