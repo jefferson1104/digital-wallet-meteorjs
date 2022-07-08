@@ -5,49 +5,45 @@ import { WalletsCollection } from "./WalletsCollection";
 export const TRANSFER_TYPE = 'TRANSFER';
 export const ADD_TYPE = 'ADD';
 
-class TransactionsMongoCollection extends Mongo.Collection {
-  insert(transactionDocument, callback) {
-    if (transactionDocument.type === TRANSFER_TYPE) {
-      // we could also check here if destination wallet exists
-      const sourceWallet = WalletsCollection.findOne(
-        transactionDocument.sourceWalletId
-      );
+export const TransactionsCollection = new Mongo.Collection('transactions');
 
-      if (!sourceWallet) {
-        throw new Meteor.Error('Source wallet not found.');
-      }
+TransactionsCollection.before.insert(function (userId, transactionDocument) {
+  if (transactionDocument.type === TRANSFER_TYPE) {
+    // we could also check here if destination wallet exists
+    const sourceWallet = WalletsCollection.findOne(
+      transactionDocument.sourceWalletId
+    );
 
-      if (sourceWallet.balance < transactionDocument.amount) {
-        throw new Meteor.Error('Insufficient founds.');
-      }
-
-      WalletsCollection.update(transactionDocument.sourceWalletId, {
-        $inc: { balance: -transactionDocument.amount },
-      });
-      WalletsCollection.update(transactionDocument.destinationWalletId, {
-        $inc: { balance: transactionDocument.amount },
-      });
+    if (!sourceWallet) {
+      throw new Meteor.Error("Source wallet not found.");
     }
 
-    if (transactionDocument.type === ADD_TYPE) {
-      const sourceWallet = WalletsCollection.findOne(
-        transactionDocument.sourceWalletId
-      );
-
-      if (!sourceWallet) {
-        throw new Meteor.Meteor.Error('Source wallet not found.');
-      }
-
-      WalletsCollection.update(transactionDocument.sourceWalletId, {
-        $inc: { balance: transactionDocument.amount },
-      });
+    if (sourceWallet.balance < transactionDocument.amount) {
+      throw new Meteor.Error("Insufficient founds.");
     }
 
-    return super.insert(transactionDocument, callback);
+    WalletsCollection.update(transactionDocument.sourceWalletId, {
+      $inc: { balance: -transactionDocument.amount },
+    });
+    WalletsCollection.update(transactionDocument.destinationWalletId, {
+      $inc: { balance: transactionDocument.amount },
+    });
   }
-}
 
-export const TransactionsCollection = new TransactionsMongoCollection('transactions');
+  if (transactionDocument.type === ADD_TYPE) {
+    const sourceWallet = WalletsCollection.findOne(
+      transactionDocument.sourceWalletId
+    );
+
+    if (!sourceWallet) {
+      throw new Meteor.Error('Source wallet not found.');
+    }
+
+    WalletsCollection.update(transactionDocument.sourceWalletId, {
+      $inc: { balance: transactionDocument.amount },
+    });
+  }
+});
 
 const TransactionsSchema = new SimpleSchema({
   type: {

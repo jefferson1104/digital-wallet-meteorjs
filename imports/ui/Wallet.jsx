@@ -37,12 +37,12 @@ export const Wallet = () => {
       createdAt: new Date(),
     }, (errorResponse) => {
       if (errorResponse) {
-        if (errorResponse.error) {
-          setErrorMessage(errorResponse.error);
-        } else {
+        if (errorResponse.error === "validation-error") {
           errorResponse.details?.forEach((error) => {
             setErrorMessage(error.message);
           });
+        } else {
+          setErrorMessage(errorResponse.error);
         }
       } else {
         setOpen(false);
